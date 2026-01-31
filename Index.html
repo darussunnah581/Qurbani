@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>مدرسہ دارالسنہ - ایڈمن</title>
+    
+    <!-- یہ 3 نئی لائنیں شامل کریں -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/jpeg" href="images/Logo.jpg">
+    <link rel="apple-touch-icon" href="images/Logo.jpg">
+    <link href="https://fonts.googleapis.com/css2?family=Lateef&family=Noto+Nastaliq+Urdu:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* نوٹیفکیشن بیج کے لیے اسٹائل */
+        .badge {
+            background: #d32f2f;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 8px;
+            font-size: 0.8rem;
+            margin-right: 10px;
+            display: none; /* جب ڈیٹا نہ ہو تو چھپا رہے گا */
+        }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <div id="splash">
+        <img src="images/Logo.jpg" id="splash-logo" alt="Madrasa Logo">
+        <div class="splash-text">
+            مدرسہ دارالسنہ<br>
+            <span style="font-size: 1.2rem; font-weight: normal;">سی بلاک ملت ٹاؤن</span>
+        </div>
+        <small style="color:#999; margin-top:20px;">لوڈ ہو رہا ہے...</small>
+    </div>
+
+    <div id="app-header" class="hidden">
+        <img src="images/Logo.jpg" class="madrasa-logo" alt="Logo">
+        <div style="text-align:right;">
+            <h1 class="header-main">مدرسہ دارالسنہ</h1>
+            <h2 class="header-sub">سی بلاک ملت ٹاؤن فیصل آباد</h2>
+        </div>
+    </div>
+
+    <div id="login-view" style="display:none;">
+        <div class="card">
+            <h2 style="color:var(--primary); margin-top:0; text-align:center;">ایڈمن لاگ ان</h2>
+            <div style="margin-bottom:15px;">
+                <input type="text" id="adminUser" placeholder="یوزر نیم (D)" style="width:100%; padding:10px; border-radius:8px; border:1px solid #ccc;">
+            </div>
+            <div style="margin-bottom:15px;">
+                <input type="password" id="adminPass" placeholder="پاس ورڈ (1)" style="width:100%; padding:10px; border-radius:8px; border:1px solid #ccc;">
+            </div>
+            <button class="menu-btn btn-confirmed" onclick="loginAdmin()" style="width:100%; cursor:pointer;">داخل کریں</button>
+        </div>
+    </div>
+
+    <div id="dashboard-view" style="display:none;">
+        
+        <div id="menu-view">
+            <button class="menu-btn btn-pending" onclick="openPage('pending', 'زير التواء', this)">
+                1. زير التواء <span id="pending-badge" class="badge">0</span>
+            </button>
+            <button class="menu-btn btn-confirmed" onclick="openPage('confirmed', 'کنفرم شدہ', this)">
+                2. کنفرم شدہ
+            </button>
+            <button class="menu-btn btn-animals" onclick="openPage('animals', 'جانور', this)">
+                3. جانور
+            </button>
+            <button class="menu-btn btn-finance" onclick="openPage('finance', 'مالیات', this)">
+                4. مالیات
+            </button>
+            <button class="menu-btn btn-payments" onclick="openPage('payments', 'بقایا رقم', this)">
+                5. بقایا رقم
+            </button>
+            <button class="menu-btn btn-history" onclick="openPage('history', 'منسوخ شدہ', this)">
+                6. منسوخ شدہ
+            </button>
+            <button class="menu-btn" style="background: linear-gradient(135deg, #455A64, #263238);" onclick="openPage('settings', 'سیٹنگز / بیک اپ', this)">
+                7. ڈیٹا بیک اپ
+            </button>
+        </div>
+
+        <div id="content-detail-view" style="display:none; padding:10px;">
+            <h3 id="page-title" style="text-align:center; color:var(--primary); border-bottom:1px solid #eee; padding-bottom:10px;">عنوان</h3>
+            <div id="page-content"></div>
+        </div>
+
+    </div>
+
+    <div id="receipt-print-area" style="display:none; width:350px; background:white; padding:20px; border:2px solid #00695c;">
+        <div style="text-align:center; border-bottom:2px solid #00695c; padding-bottom:10px; margin-bottom:10px;">
+            <h2 style="margin:0; color: #00695c; font-size:1.4rem;">مدرسہ دارالسنہ</h2>
+            <p style="margin:5px 0;">سی بلاک ملت ٹاؤن - قربانی رسید</p>
+        </div>
+        <div style="line-height:1.8;">
+            <p><strong>نام:</strong> <span id="rec-name"></span></p>
+            <p><strong>فون:</strong> <span id="rec-phone"></span></p>
+            <p><strong>جانور:</strong> <span id="rec-animal"></span></p>
+            <p><strong>حصہ نمبر:</strong> <span id="rec-share-no"></span></p>
+            <p><strong>وقت:</strong> <span id="rec-time"></span></p>
+            <hr>
+            <p><strong>کل بل:</strong> <span id="rec-total"></span> Rs</p>
+            <p><strong>ادا شدہ:</strong> <span id="rec-paid"></span> Rs</p>
+            <p style="color:red; font-weight:bold;"><strong>بقایا:</strong> <span id="rec-due"></span> Rs</p>
+        </div>
+        <div style="text-align:center; margin-top:20px; font-style:italic; color:#00695c;">
+            اللہ تعالیٰ قبول فرمائے
+        </div>
+    </div>
+
+    <div class="footer hidden" id="main-footer">
+        <button class="footer-btn" onclick="goBack()" id="back-btn" style="display:none; width:100%; padding:10px; background:var(--primary); color:white; border:none; border-radius:5px;">← واپس مینو پر جائیں</button>
+        <div class="dev-credit" style="text-align:center; padding:10px; font-size:0.8rem; color:#666;">Design & Dev: Usman Yusuf</div>
+    </div>
+
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>
