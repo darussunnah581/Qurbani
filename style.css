@@ -183,3 +183,32 @@ input { width: 100%; padding: 12px; margin: 8px 0; border:1px solid #ddd; border
 .hidden {
     display: none !important;
 }
+/* پرانے کوڈ کے نیچے یہ شامل کریں */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: right;
+    font-size: 0.9rem;
+}
+
+th {
+    background-color: var(--primary);
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* جانور کی تفصیل والا بٹن */
+.btn-detail {
+    background: #673AB7; 
+    color: white;
+}
